@@ -1,0 +1,102 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Multi-cloud Access Review</title><style>:root{--bg:#f3f4f7;--card:#fff;--ink:#151a2c;--mut:#5b6278;--line:#dcdfe7;--soft:#eef0f4;--crit:#c8432b;--high:#c2691b;--med:#b07a00;--low:#5b6278;--ok:#17865f;--az:#0a7bc2;--aws:#d9742b}
+@media (prefers-color-scheme:dark){:root{--bg:#0f1220;--card:#181c2e;--ink:#e9ecf4;--mut:#9ca3ba;--line:#2a3048;--soft:#1f2438;--crit:#f07a62;--high:#f0a05f;--med:#e7b43b;--low:#9ca3ba;--ok:#3fc48d;--az:#4aa8e0;--aws:#f0a05f;color-scheme:dark}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 "Segoe UI",system-ui,sans-serif}
+.w{max-width:1120px;margin:0 auto;padding:28px 20px 60px}
+header{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:flex-end;margin-bottom:18px}
+h1{margin:0;font-size:1.7rem;letter-spacing:-.02em}.sub{color:var(--mut);font-size:.82rem}.mono{font-family:Consolas,ui-monospace,monospace;font-size:.8rem;color:var(--mut)}
+.kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:18px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px}.kpi b{display:block;font-size:1.7rem;font-variant-numeric:tabular-nums}.kpi span{font-size:.74rem;color:var(--mut)}
+.kpi.crit b{color:var(--crit)}.kpi.high b{color:var(--high)}.kpi.med b{color:var(--med)}.kpi.low b{color:var(--low)}.kpi.ok b{color:var(--ok)}
+table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--line);font-size:.9rem;vertical-align:top}
+th{font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--mut);background:var(--soft)}
+tr:last-child td{border-bottom:0}.sub{color:var(--mut);font-size:.76rem;font-family:Consolas,ui-monospace,monospace}
+.pill{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;padding:3px 9px;border-radius:999px;white-space:nowrap;color:#fff}
+.pill.critical{background:var(--crit)}.pill.high{background:var(--high)}.pill.medium{background:var(--med)}.pill.low{background:var(--low)}.pill.ok{background:var(--soft);color:var(--ok)}
+.cloud{font-size:.72rem;font-weight:700;padding:3px 8px;border-radius:6px;border:1px solid}.cloud.azure{color:var(--az);border-color:var(--az)}.cloud.aws{color:var(--aws);border-color:var(--aws)}
+.chip{display:inline-block;font-size:.72rem;background:var(--soft);border:1px solid var(--line);border-radius:6px;padding:2px 7px;margin:1px 2px 1px 0;color:var(--mut)}
+.dt{color:var(--mut);font-size:.8rem;margin-top:4px}
+.leg{margin-top:14px;font-size:.8rem;color:var(--mut)}
+@media (max-width:760px){.kpis{grid-template-columns:repeat(3,1fr)}th:nth-child(4),td:nth-child(4){display:none}}</style></head><body><div class="w">
+<header><div><div class="mono">MULTI-CLOUD PRIVILEGED ACCESS REVIEW</div><h1>Access Review</h1><div class="sub">2026-10-22 19:57 &middot; Azure: 5 flagged &middot; AWS: 3 flagged &middot; 10 principals</div></div><div class="mono">Access Review v1.0.0</div></header>
+<div class="kpis">
+<div class="kpi crit"><b>2</b><span>Critical</span></div>
+<div class="kpi high"><b>5</b><span>High</span></div>
+<div class="kpi med"><b>0</b><span>Medium</span></div>
+<div class="kpi low"><b>1</b><span>Low / expected</span></div>
+<div class="kpi ok"><b>2</b><span>OK</span></div>
+</div>
+<table><thead><tr><th>Severity</th><th>Cloud</th><th>Principal</th><th>Access</th><th>Why flagged</th></tr></thead>
+<tbody><tr class='sev-critical'>
+<td><span class='pill critical'>Critical</span></td>
+<td><span class='cloud aws'>AWS</span></td>
+<td>deploy-bot<div class='sub'>iam-user &middot; AWS account 1234</div></td>
+<td>AdministratorAccess</td>
+<td><span class='chip'>AdministratorAccess</span> <span class='chip'>No MFA</span> <span class='chip'>Access key 412d old</span><div class='dt'>Long-lived admin key on a non-human account with no rotation.</div></td>
+</tr>
+<tr class='sev-critical'>
+<td><span class='pill critical'>Critical</span></td>
+<td><span class='cloud azure'>Azure</span></td>
+<td>partner.ext_fabrikam.com#EXT#@contoso.com<div class='sub'>user &middot; Entra ID directory</div></td>
+<td>User Access Administrator</td>
+<td><span class='chip'>Guest with privileged role</span><div class='dt'>External account holds a role that can grant access to others.</div></td>
+</tr>
+<tr class='sev-high'>
+<td><span class='pill high'>High</span></td>
+<td><span class='cloud aws'>AWS</span></td>
+<td>contractor-amy<div class='sub'>iam-user &middot; AWS account 1234</div></td>
+<td>(standard user)</td>
+<td><span class='chip'>No MFA</span> <span class='chip'>2 inline policy(ies)</span></td>
+</tr>
+<tr class='sev-high'>
+<td><span class='pill high'>High</span></td>
+<td><span class='cloud aws'>AWS</span></td>
+<td>OrganizationAccountAccessRole<div class='sub'>iam-role &middot; AWS account 5678</div></td>
+<td>AdministratorAccess</td>
+<td><span class='chip'>Role with full admin</span><div class='dt'>Cross-account admin role - confirm the trust policy is restricted.</div></td>
+</tr>
+<tr class='sev-high'>
+<td><span class='pill high'>High</span></td>
+<td><span class='cloud azure'>Azure</span></td>
+<td>automation-sp (app)<div class='sub'>servicePrincipal &middot; Entra ID directory</div></td>
+<td>Application Administrator</td>
+<td><span class='chip'>App can add credentials to other apps</span></td>
+</tr>
+<tr class='sev-high'>
+<td><span class='pill high'>High</span></td>
+<td><span class='cloud azure'>Azure</span></td>
+<td>jsmith@contoso.com<div class='sub'>user &middot; Subscription: Prod</div></td>
+<td>Owner</td>
+<td><span class='chip'>Standing subscription Owner</span></td>
+</tr>
+<tr class='sev-high'>
+<td><span class='pill high'>High</span></td>
+<td><span class='cloud azure'>Azure</span></td>
+<td>legacy.admin@contoso.com<div class='sub'>user &middot; Entra ID directory</div></td>
+<td>Global Administrator, Exchange Administrator</td>
+<td><span class='chip'>Global Administrator</span> <span class='chip'>2 privileged roles</span> <span class='chip'>No sign-in 210d</span><div class='dt'>Standing Global Admin with no recent activity.</div></td>
+</tr>
+<tr class='sev-low'>
+<td><span class='pill low'>Low</span></td>
+<td><span class='cloud azure'>Azure</span></td>
+<td>breakglass01@contoso.com<div class='sub'>user &middot; Entra ID directory</div></td>
+<td>Global Administrator</td>
+<td><span class='chip'>Break-glass (expected)</span><div class='dt'>Emergency access account - expected, monitor sign-ins.</div></td>
+</tr>
+<tr class='sev-ok'>
+<td><span class='pill ok'>OK</span></td>
+<td><span class='cloud aws'>AWS</span></td>
+<td>readonly-auditor<div class='sub'>iam-user &middot; AWS account 1234</div></td>
+<td>(standard user)</td>
+<td></td>
+</tr>
+<tr class='sev-ok'>
+<td><span class='pill ok'>OK</span></td>
+<td><span class='cloud azure'>Azure</span></td>
+<td>secops@contoso.com<div class='sub'>user &middot; Entra ID directory</div></td>
+<td>Security Administrator</td>
+<td><span class='chip'>Eligible via PIM</span></td>
+</tr></tbody></table>
+<p class="leg">Read-only review. Flags: guest/external admins, standing (non-JIT) privileged access, stale privileged accounts, multiple high-priv roles, AWS AdministratorAccess, missing MFA and old access keys. Generated by Multi-cloud Access Review &middot; github.com/aayyagar/multicloud-access-review</p>
+</div></body></html>
